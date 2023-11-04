@@ -52,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_prev"
                 android:layout_marginEnd="@dimen/marginHorizontal"
+                android:visibility="gone"
                 android:src="@drawable/ic_back_left"
                 android:contentDescription="@string/prev_button"
                 />

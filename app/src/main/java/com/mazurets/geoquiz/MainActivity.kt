@@ -1,32 +1,28 @@
 package com.mazurets.geoquiz
 
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import com.mazurets.geoquiz.databinding.ActivityMainBinding
-import com.mazurets.geoquiz.model.Question
-import java.lang.Math.abs
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private val questionBank = listOf(
-        Question(R.string.question_australia, true),
-        Question(R.string.question_oceans, true),
-        Question(R.string.question_mideast, false),
-        Question(R.string.question_africa, false),
-        Question(R.string.question_americas, true),
-        Question(R.string.question_asia, true)
-    )
-    private var currentIndex = 0
     private var countAnswer = 0
     private var correctAnswer = 0
+
+    private val quizViewModel: QuizViewModel by lazy {
+        ViewModelProviders.of(this)[QuizViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
+
+        val currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0) ?: 0
+        quizViewModel.currentIndex = currentIndex
 
         binding.btnTrue.setOnClickListener {
             if (checkPressed())
@@ -43,12 +39,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnNext.setOnClickListener {
-            currentIndex = (currentIndex + 1) % questionBank.size
+            quizViewModel.moveToNext()
+            binding.btnPrev.visibility = View.VISIBLE
             updateQuestion()
         }
 
         binding.btnPrev.setOnClickListener {
-            currentIndex = kotlin.math.abs((currentIndex - 1) % questionBank.size)
+            quizViewModel.moveToPrev()
             updateQuestion()
         }
 
@@ -56,26 +53,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateQuestion() {
-        binding.mainText.setText(questionBank[currentIndex].textResId)
+        binding.mainText.setText(quizViewModel.currentQuestionText)
     }
 
     private fun checkAnswer(userAnswer: Boolean) {
-        val resultMessage = if (userAnswer == questionBank[currentIndex].answer){
+        val resultMessage = if (userAnswer == quizViewModel.currentQuestionAnswer) {
             correctAnswer++
             R.string.it_s_correct
-        }
-        else
+        } else
             R.string.it_s_incorrect
 
         Toast.makeText(this, resultMessage, Toast.LENGTH_SHORT).show()
 
-        questionBank[currentIndex].isPressed = true
+        quizViewModel.currentQuestionPressed = true
         countAnswer++
         checkCountAnswer()
     }
 
     private fun checkPressed(): Boolean {
-        if (questionBank[currentIndex].isPressed) {
+        if (quizViewModel.currentQuestionPressed) {
             Toast.makeText(
                 this,
                 getString(R.string.you_have_already_given_the_answer),
@@ -85,12 +81,25 @@ class MainActivity : AppCompatActivity() {
         }
         return false
     }
-    private fun checkCountAnswer(){
-        if (countAnswer == questionBank.size){
-            Toast.makeText(this,
+
+    private fun checkCountAnswer() {
+        if (countAnswer == quizViewModel.questionBankSize) {
+            Toast.makeText(
+                this,
                 "Correct answers $correctAnswer out of $countAnswer",
-                Toast.LENGTH_LONG).show()
+                Toast.LENGTH_LONG
+            ).show()
         }
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_INDEX, quizViewModel.currentIndex)
+    }
+
+    companion object {
+        private const val TAG = "MainActivity"
+        private const val KEY_INDEX = "index"
     }
 }

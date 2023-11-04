@@ -46,6 +46,7 @@
             android:id="@+id/btn_prev"
             android:layout_marginEnd="@dimen/marginHorizontal"
             android:src="@drawable/ic_back_left"
+            android:visibility="gone"
             android:contentDescription="@string/prev_button"
             />
 
