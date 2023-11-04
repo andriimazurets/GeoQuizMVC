@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         Question(R.string.question_asia, true)
     )
     private var currentIndex = 0
+    private var countAnswer = 0
+    private var correctAnswer = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,14 +60,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkAnswer(userAnswer: Boolean) {
-        val resultMessage = if (userAnswer == questionBank[currentIndex].answer)
+        val resultMessage = if (userAnswer == questionBank[currentIndex].answer){
+            correctAnswer++
             R.string.it_s_correct
+        }
         else
             R.string.it_s_incorrect
 
         Toast.makeText(this, resultMessage, Toast.LENGTH_SHORT).show()
 
         questionBank[currentIndex].isPressed = true
+        countAnswer++
+        checkCountAnswer()
     }
 
     private fun checkPressed(): Boolean {
@@ -78,5 +84,13 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return false
+    }
+    private fun checkCountAnswer(){
+        if (countAnswer == questionBank.size){
+            Toast.makeText(this,
+                "Correct answers $correctAnswer out of $countAnswer",
+                Toast.LENGTH_LONG).show()
+        }
+
     }
 }
