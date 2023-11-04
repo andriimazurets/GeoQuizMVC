@@ -27,10 +27,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
 
         binding.btnTrue.setOnClickListener {
+            if (checkPressed())
+                return@setOnClickListener
+
             checkAnswer(true)
         }
 
         binding.btnFalse.setOnClickListener {
+            if (checkPressed())
+                return@setOnClickListener
+
             checkAnswer(false)
         }
 
@@ -58,5 +64,19 @@ class MainActivity : AppCompatActivity() {
             R.string.it_s_incorrect
 
         Toast.makeText(this, resultMessage, Toast.LENGTH_SHORT).show()
+
+        questionBank[currentIndex].isPressed = true
+    }
+
+    private fun checkPressed(): Boolean {
+        if (questionBank[currentIndex].isPressed) {
+            Toast.makeText(
+                this,
+                getString(R.string.you_have_already_given_the_answer),
+                Toast.LENGTH_SHORT
+            ).show()
+            return true
+        }
+        return false
     }
 }
