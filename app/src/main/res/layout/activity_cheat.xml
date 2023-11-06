@@ -10,6 +10,7 @@
         android:id="@+id/cheat_text_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/layer_list_background"
         android:padding="24dp"
         android:text="@string/warning_text"/>
     <TextView
@@ -17,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="24dp"
+        android:background="@drawable/layer_list_background"
         tools:text="Answer"/>
     <androidx.appcompat.widget.AppCompatButton
         style="@style/buttonStyle"
