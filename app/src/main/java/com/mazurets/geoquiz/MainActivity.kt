@@ -1,11 +1,13 @@
 package com.mazurets.geoquiz
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import com.mazurets.geoquiz.CheatActivity.Companion.EXTRA_ANSWER_SHOWN
 import com.mazurets.geoquiz.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -53,10 +55,20 @@ class MainActivity : AppCompatActivity() {
         binding.btnCheat.setOnClickListener {
             val answerIsTrue = quizViewModel.currentQuestionAnswer
             val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
-            startActivity(intent)
+            startActivityForResult(intent, REQUEST_CODE_CHEAT)
         }
 
         updateQuestion()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode != Activity.RESULT_OK)
+            return
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            quizViewModel.isCheater =
+                data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+        }
     }
 
     private fun updateQuestion() {
@@ -64,11 +76,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkAnswer(userAnswer: Boolean) {
-        val resultMessage = if (userAnswer == quizViewModel.currentQuestionAnswer) {
-            correctAnswer++
-            R.string.it_s_correct
-        } else
-            R.string.it_s_incorrect
+        val resultMessage = when {
+                quizViewModel.isCheater -> R.string.judgment_toast
+                userAnswer == quizViewModel.currentQuestionAnswer -> {
+                    correctAnswer++
+                    R.string.it_s_correct
+                }
+                else -> R.string.it_s_incorrect
+            }
 
         Toast.makeText(this, resultMessage, Toast.LENGTH_SHORT).show()
 
@@ -108,5 +123,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "MainActivity"
         private const val KEY_INDEX = "index"
+        private const val REQUEST_CODE_CHEAT = 0
     }
 }

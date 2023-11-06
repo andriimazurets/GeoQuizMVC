@@ -1,5 +1,6 @@
 package com.mazurets.geoquiz
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -21,11 +22,19 @@ class CheatActivity : AppCompatActivity() {
                 R.string.false_button
 
             binding.answerTextView.setText(answerText)
+            setAnswerForResult(true)
         }
     }
 
+    private fun setAnswerForResult(isAnswerShow: Boolean) {
+        val data = Intent().apply {
+            putExtra(EXTRA_ANSWER_SHOWN, isAnswerShow)
+        }
+        setResult(Activity.RESULT_OK, data)
+    }
     companion object {
-        private const val EXTRA_ANSWER_IS_TRUE = "com.bignerdranch.android.geoquiz.answer_is_true"
+        const val EXTRA_ANSWER_SHOWN = "answer_shown"
+        private const val EXTRA_ANSWER_IS_TRUE = "answer_is_true"
         fun newIntent(packageContext: Context, answerIsTrue: Boolean): Intent {
             return Intent(packageContext, CheatActivity::class.java).apply {
                 putExtra(EXTRA_ANSWER_IS_TRUE, answerIsTrue)
