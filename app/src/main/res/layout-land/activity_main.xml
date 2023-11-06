@@ -11,6 +11,16 @@
         android:layout_margin="@dimen/marginHorizontal"
         android:orientation="vertical">
 
+        <ImageButton
+            android:id="@+id/btn_cheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/marginHorizontal"
+            android:contentDescription="@string/cheat"
+            android:src="@drawable/ic_cheat"
+            android:layout_gravity="center"
+            />
+
         <TextView
             android:background="@drawable/layer_list_background"
             android:id="@+id/main_text"

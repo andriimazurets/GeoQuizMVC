@@ -3,16 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:layout_margin="@dimen/marginHorizontal"
+    android:gravity="center"
     android:orientation="vertical">
 
+        <ImageButton
+            android:id="@+id/btn_cheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/marginHorizontal"
+            android:contentDescription="@string/cheat"
+            android:src="@drawable/ic_cheat"
+            android:layout_gravity="center"
+            />
+
     <TextView
-        android:background="@drawable/layer_list_background"
         android:id="@+id/main_text"
+        style="@style/mainTextStyle"
+        android:background="@drawable/layer_list_background"
         android:text=""
-        tools:text="@string/question_australia"
-        style="@style/mainTextStyle" />
+        tools:text="@string/question_australia" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -22,15 +32,15 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_true"
+            style="@style/buttonStyle"
             android:layout_marginEnd="@dimen/marginHorizontal"
-            android:text="@string/true_button"
-            style="@style/buttonStyle" />
+            android:text="@string/true_button" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_false"
+            style="@style/buttonStyle"
             android:layout_marginStart="@dimen/marginHorizontal"
-            android:text="@string/false_button"
-            style="@style/buttonStyle"/>
+            android:text="@string/false_button" />
 
     </LinearLayout>
 
@@ -41,22 +51,21 @@
         android:padding="@dimen/defaultPadding">
 
         <ImageButton
+            android:id="@+id/btn_prev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_prev"
             android:layout_marginEnd="@dimen/marginHorizontal"
-            android:src="@drawable/ic_back_left"
-            android:visibility="gone"
             android:contentDescription="@string/prev_button"
-            />
+            android:src="@drawable/ic_back_left"
+            android:visibility="gone" />
 
         <ImageButton
+            android:id="@+id/btn_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_next"
-            android:text="@string/next_button"
+            android:contentDescription="@string/next_button"
             android:src="@drawable/ic_next_right"
-            android:contentDescription="@string/next_button" />
+            android:text="@string/next_button" />
 
     </LinearLayout>
 </LinearLayout>

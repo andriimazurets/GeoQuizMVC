@@ -1,5 +1,6 @@
 package com.mazurets.geoquiz
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -47,6 +48,12 @@ class MainActivity : AppCompatActivity() {
         binding.btnPrev.setOnClickListener {
             quizViewModel.moveToPrev()
             updateQuestion()
+        }
+
+        binding.btnCheat.setOnClickListener {
+            val answerIsTrue = quizViewModel.currentQuestionAnswer
+            val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
+            startActivity(intent)
         }
 
         updateQuestion()
