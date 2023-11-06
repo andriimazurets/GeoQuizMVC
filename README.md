@@ -7,3 +7,5 @@
 ![image](https://github.com/andriimazurets/GeoQuizMVC/assets/127737896/08690810-09e8-4898-b304-ac66c8d4000b)
 
 ![image](https://github.com/andriimazurets/GeoQuizMVC/assets/127737896/6c4ebfda-a4ee-493a-8067-d427db46dcdf)
+
+![image](https://github.com/andriimazurets/GeoQuizMVC/assets/127737896/83aad055-1217-453b-8c25-6c656ae3f970)
