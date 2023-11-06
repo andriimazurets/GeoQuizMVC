@@ -8,5 +8,5 @@
 
 ![image](https://github.com/andriimazurets/GeoQuizMVC/assets/127737896/6c4ebfda-a4ee-493a-8067-d427db46dcdf)
 
-![image](https://github.com/andriimazurets/GeoQuizMVC/assets/127737896/83aad055-1217-453b-8c25-6c656ae3f970)
+![image](https://github.com/andriimazurets/GeoQuizMVC/assets/127737896/c14adb45-d1d2-4cd2-a892-f758e60ddffd)
 ![image](https://github.com/andriimazurets/GeoQuizMVC/assets/127737896/8e099be9-fd27-4f3e-930c-57acdaffdff1)
