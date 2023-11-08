@@ -1,6 +1,7 @@
 package com.mazurets.geoquiz
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -52,10 +53,11 @@ class MainActivity : AppCompatActivity() {
             updateQuestion()
         }
 
-        binding.btnCheat.setOnClickListener {
+        binding.btnCheat.setOnClickListener {view ->
             val answerIsTrue = quizViewModel.currentQuestionAnswer
             val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
-            startActivityForResult(intent, REQUEST_CODE_CHEAT)
+            val options = ActivityOptions.makeClipRevealAnimation(view, 0, 0, view.width, view.height)
+            startActivityForResult(intent, REQUEST_CODE_CHEAT, options.toBundle())
         }
 
         updateQuestion()
